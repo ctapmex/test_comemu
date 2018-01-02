@@ -18,10 +18,10 @@ namespace Remote4Support.Gui
             Text = session.SessionName;
             Resize += new System.EventHandler(TermPanel_Resize);
 
-            Controls.Add(conemu = new ConEmuControl() { AutoStartInfo = null, MinimumSize = new Size(800, 600), Dock = DockStyle.Fill });
+            Controls.Add(conemu = new ConEmuControl() { AutoStartInfo = null, Dock = DockStyle.Fill });
             con_session = conemu.Start(new ConEmuStartInfo()
             {
-                ConsoleProcessCommandLine = "cmd.exe",
+                ConsoleProcessCommandLine = "cmd.exe"
             });
         }
 

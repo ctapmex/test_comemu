@@ -33,15 +33,19 @@ namespace Remote4Support.Gui
             ToolWindow panel2 = new PanelConsole(ses2);
             ToolWindow panel3 = new PanelConsole(ses3);
 
-            DockPanel p1 = AddDockPanel(ses1.SessionGroup);
-            DockPanel p2 = AddDockPanel(ses2.SessionGroup);
-            DockPanel p3 = AddDockPanel(ses3.SessionGroup);
+            DockPanel p1 = AddGroupDockPanel(ses1.SessionGroup);
+            DockPanel p2 = AddGroupDockPanel(ses2.SessionGroup);
+            DockPanel p3 = AddGroupDockPanel(ses3.SessionGroup);
             panel1.Show(p1);
+            ApplyDockRestrictions(panel1);
             panel2.Show(p2);
+            ApplyDockRestrictions(panel2);
             panel3.Show(p3);
+            ApplyDockRestrictions(panel3);
+
         }
 
-        internal DockPanel AddDockPanel(string name)
+        internal DockPanel AddGroupDockPanel(string name)
         {
             panel_groups.TryGetValue(name, out var result);
             if (result == null)
@@ -56,7 +60,8 @@ namespace Remote4Support.Gui
                 DockContent dc = new DockContent
                 {
                     TabText = name,
-                    ShowInTaskbar = false
+                    ShowInTaskbar = false,
+                    DockAreas = DockAreas.Document | DockAreas.DockBottom | DockAreas.DockLeft | DockAreas.DockRight | DockAreas.DockTop
                 };
 
                 dc.Show(DockPanel);
@@ -67,6 +72,12 @@ namespace Remote4Support.Gui
             }
 
             return result;
+        }
+
+        public static void ApplyDockRestrictions(DockContent panel)
+        {
+            panel.DockAreas = DockAreas.Document | DockAreas.DockBottom | DockAreas.DockLeft | DockAreas.DockRight |
+                              DockAreas.DockTop;
         }
 
         private void menuBarToolStripMenuItem_Click(object sender, System.EventArgs e)
