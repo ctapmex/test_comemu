@@ -21,7 +21,7 @@ namespace Remote4Support.Gui
             Controls.Add(conemu = new ConEmuControl() { AutoStartInfo = null, Dock = DockStyle.Fill });
             con_session = conemu.Start(new ConEmuStartInfo()
             {
-                ConsoleProcessCommandLine = "cmd.exe"
+                ConsoleProcessCommandLine = session.CommandLine
             });
         }
 

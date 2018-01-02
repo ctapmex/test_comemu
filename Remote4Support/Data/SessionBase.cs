@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Xml.Serialization;
 
 namespace Remote4Support.Data
 {
@@ -9,10 +10,20 @@ namespace Remote4Support.Data
         Console
     }
 
-    public abstract class SessionBase
+    public abstract class SessionBase: IComparable
     {
         public abstract SessionTypes SessionType { get; }
-        public abstract String SessionName { get; set; }
-        public abstract String SessionGroup { get; set; }
+        [XmlAttribute]
+        public abstract string SessionId { get; set; }
+        [XmlAttribute]
+        public abstract string SessionName { get; set; }
+        [XmlAttribute]
+        public abstract string SessionGroup { get; set; }
+
+        public int CompareTo(object obj)
+        {
+            SessionBase s = (SessionBase) obj;
+            return s == null ? 1 : String.Compare(SessionId, s.SessionId, StringComparison.Ordinal);
+        }
     }
 }

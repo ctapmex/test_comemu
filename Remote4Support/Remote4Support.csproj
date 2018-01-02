@@ -73,6 +73,7 @@
     <Compile Include="Data\ConsoleSession.cs" />
     <Compile Include="Data\PuttySession.cs" />
     <Compile Include="Data\SessionBase.cs" />
+    <Compile Include="Data\SessionUtils.cs" />
     <Compile Include="Gui\FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +86,7 @@
     <Compile Include="Gui\PanelConsole.Designer.cs">
       <DependentUpon>PanelConsole.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\PanelFactory.cs" />
     <Compile Include="Gui\PanelPutty.cs">
       <SubType>Form</SubType>
     </Compile>

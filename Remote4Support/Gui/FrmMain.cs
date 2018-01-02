@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using Remote4Support.Data;
 using Remote4Support.Utils;
 using WeifenLuo.WinFormsUI.Docking;
@@ -14,6 +17,7 @@ namespace Remote4Support.Gui
         private SingletonToolWindowHelper<SessionDetail> sessionDetail;
 
         private Dictionary<String, DockPanel> panel_groups = new Dictionary<String, DockPanel>();
+        static SortedList<string, SessionBase> sessionsMap = new SortedList<string, SessionBase>();
 
         public FrmMain()
         {
@@ -26,29 +30,21 @@ namespace Remote4Support.Gui
             sessions.ShowWindow(DockState.DockRight);
             sessionDetail.ShowWindow(DockState.DockRightAutoHide);
 
-            ConsoleSession ses1 = new ConsoleSession {SessionGroup = "west", SessionName = "app1"};
-            ConsoleSession ses2 = new ConsoleSession {SessionGroup = "east", SessionName = "app2" };
-            ConsoleSession ses3 = new ConsoleSession {SessionGroup = "west", SessionName = "app3" };
-            ToolWindow panel1 = new PanelConsole(ses1);
-            ToolWindow panel2 = new PanelConsole(ses2);
-            ToolWindow panel3 = new PanelConsole(ses3);
+            LoadSessions();
+            foreach (KeyValuePair<string, SessionBase> session in sessionsMap)
+            {
+                DockPanel p1 = AddGroupDockPanel(session.Value.SessionGroup);
+                ToolWindow panel1 = PanelFactory.createPanel(session.Value);
+                panel1.Show(p1);
+                ApplyDockRestrictions(panel1);
+            }
 
-            DockPanel p1 = AddGroupDockPanel(ses1.SessionGroup);
-            DockPanel p2 = AddGroupDockPanel(ses2.SessionGroup);
-            DockPanel p3 = AddGroupDockPanel(ses3.SessionGroup);
-            panel1.Show(p1);
-            ApplyDockRestrictions(panel1);
-            panel2.Show(p2);
-            ApplyDockRestrictions(panel2);
-            panel3.Show(p3);
-            ApplyDockRestrictions(panel3);
-
+            SaveSessions();
         }
 
-        internal DockPanel AddGroupDockPanel(string name)
+        private DockPanel AddGroupDockPanel(string name)
         {
-            panel_groups.TryGetValue(name, out var result);
-            if (result == null)
+           if (!panel_groups.TryGetValue(name, out var result))
             {
                 DockPanel dp = new DockPanel
                 {
@@ -74,7 +70,7 @@ namespace Remote4Support.Gui
             return result;
         }
 
-        public static void ApplyDockRestrictions(DockContent panel)
+        private static void ApplyDockRestrictions(DockContent panel)
         {
             panel.DockAreas = DockAreas.Document | DockAreas.DockBottom | DockAreas.DockLeft | DockAreas.DockRight |
                               DockAreas.DockTop;
@@ -92,6 +88,41 @@ namespace Remote4Support.Gui
             ToolStripMenuItem mi = (ToolStripMenuItem)sender;
             mi.Checked = !mi.Checked;
             statusStrip1.Visible = mi.Checked;
+        }
+
+        public static void SaveSessions()
+        {
+            SessionUtils.SaveSessionsToFile(sessionsMap.Values.ToList(), "d:/ll.xml");
+
+        }
+
+        public static void LoadSessions()
+        {
+            string fileName = "d:/ll.xml";
+
+            try
+            {
+                if (File.Exists(fileName))
+                {
+                    List<SessionBase> sessions = SessionUtils.LoadSessionsFromFile(fileName);
+                    // remove old
+                    sessionsMap.Clear();
+
+                    foreach (SessionBase session in sessions)
+                    {
+                        //AddSession(session);
+                        sessionsMap.Add(session.SessionId,session);
+                    }
+                }
+                else
+                {
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }
