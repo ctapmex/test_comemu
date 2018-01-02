@@ -25,6 +25,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,6 +51,9 @@
     <StartupObject>Remote4Support.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ConEmu.WinForms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=00340228797aafb8, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConEmu.Control.WinForms.1.0.20160518.0\lib\net40\ConEmu.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -65,11 +70,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ConsoleSession.cs" />
+    <Compile Include="Data\PuttySession.cs" />
+    <Compile Include="Data\SessionBase.cs" />
     <Compile Include="Gui\FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Gui\FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\PanelConsole.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\PanelConsole.Designer.cs">
+      <DependentUpon>PanelConsole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\PanelPutty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\PanelPutty.Designer.cs">
+      <DependentUpon>PanelPutty.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\SessionDetail.cs">
       <SubType>Form</SubType>
@@ -94,6 +114,12 @@
     <Compile Include="Utils\SingletonToolWindowHelper.cs" />
     <EmbeddedResource Include="Gui\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\PanelConsole.resx">
+      <DependentUpon>PanelConsole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\PanelPutty.resx">
+      <DependentUpon>PanelPutty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\SessionDetail.resx">
       <DependentUpon>SessionDetail.cs</DependentUpon>
@@ -132,4 +158,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="D:\code\my\Remote4Support\packages\ConEmu.Core.17.12.26\Build\ConEmu.Core.Targets" Condition="Exists('D:\code\my\Remote4Support\packages\ConEmu.Core.17.12.26\Build\ConEmu.Core.Targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('D:\code\my\Remote4Support\packages\ConEmu.Core.17.12.26\Build\ConEmu.Core.Targets')" Text="$([System.String]::Format('$(ErrorText)', 'D:\code\my\Remote4Support\packages\ConEmu.Core.17.12.26\Build\ConEmu.Core.Targets'))" />
+  </Target>
 </Project>
