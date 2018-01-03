@@ -26,11 +26,13 @@ namespace Remote4Support
 
             if (Environment.OSVersion.Version.Major >= 6) SetProcessDPIAware();
 
+            Remote4Support.Initialize();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmMain());
 
-            Log.Info("Shutdown");
+            Remote4Support.Shutdown();
         }
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

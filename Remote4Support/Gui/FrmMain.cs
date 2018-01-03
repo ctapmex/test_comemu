@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using log4net;
-using Remote4Support.Data;
 using Remote4Support.Utils;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -19,7 +16,6 @@ namespace Remote4Support.Gui
         private SingletonToolWindowHelper<SessionDetail> sessionDetail;
 
         private Dictionary<String, DockPanel> panel_groups = new Dictionary<String, DockPanel>();
-        static SortedList<string, SessionBase> sessionsMap = new SortedList<string, SessionBase>();
 
         public FrmMain()
         {
@@ -32,16 +28,15 @@ namespace Remote4Support.Gui
             sessions.ShowWindow(DockState.DockRight);
             sessionDetail.ShowWindow(DockState.DockRightAutoHide);
 
-            LoadSessions();
-            foreach (KeyValuePair<string, SessionBase> session in sessionsMap)
+
+            /*foreach (KeyValuePair<string, SessionBase> session in Remote4Support.sessionsMap)
             {
                 DockPanel p1 = AddGroupDockPanel(session.Value.SessionGroup);
                 ToolWindow panel1 = PanelFactory.createPanel(session.Value);
                 panel1.Show(p1);
                 ApplyDockRestrictions(panel1);
-            }
+            }*/
 
-            SaveSessions();
         }
 
         private DockPanel AddGroupDockPanel(string name)
@@ -92,41 +87,5 @@ namespace Remote4Support.Gui
             statusStrip1.Visible = mi.Checked;
         }
 
-        public static void SaveSessions()
-        {
-            Log.InfoFormat("Saving all sessions");
-            SessionUtils.SaveSessionsToFile(sessionsMap.Values.ToList(), "d:/ll.xml");
-        }
-
-        public static void LoadSessions()
-        {
-            string fileName = "d:/ll.xml";
-            Log.InfoFormat("Loading all sessions.  file={0}", fileName);
-
-            try
-            {
-                if (File.Exists(fileName))
-                {
-                    List<SessionBase> sessions = SessionUtils.LoadSessionsFromFile(fileName);
-                    // remove old
-                    sessionsMap.Clear();
-
-                    foreach (SessionBase session in sessions)
-                    {
-                        //AddSession(session);
-                        sessionsMap.Add(session.SessionId,session);
-                    }
-                }
-                else
-                {
-                    Log.WarnFormat("Sessions file does not exist, nothing loaded.  file={0}", fileName);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Log.Error("Error while loading sessions from " + fileName, ex);
-            }
-        }
-    }
+     }
 }

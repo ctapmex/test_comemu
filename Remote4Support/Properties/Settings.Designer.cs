@@ -22,5 +22,17 @@ namespace Remote4Support.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SettingsFolder {
+            get {
+                return ((string)(this["SettingsFolder"]));
+            }
+            set {
+                this["SettingsFolder"] = value;
+            }
+        }
     }
 }
