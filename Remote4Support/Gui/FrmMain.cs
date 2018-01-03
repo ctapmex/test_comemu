@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
+using log4net;
 using Remote4Support.Data;
 using Remote4Support.Utils;
 using WeifenLuo.WinFormsUI.Docking;
@@ -12,6 +12,8 @@ namespace Remote4Support.Gui
 {
     public partial class FrmMain : Form
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         internal DockPanel DockPanel { get; }
         private SingletonToolWindowHelper<SessionTreeView> sessions;
         private SingletonToolWindowHelper<SessionDetail> sessionDetail;
@@ -92,13 +94,14 @@ namespace Remote4Support.Gui
 
         public static void SaveSessions()
         {
+            Log.InfoFormat("Saving all sessions");
             SessionUtils.SaveSessionsToFile(sessionsMap.Values.ToList(), "d:/ll.xml");
-
         }
 
         public static void LoadSessions()
         {
             string fileName = "d:/ll.xml";
+            Log.InfoFormat("Loading all sessions.  file={0}", fileName);
 
             try
             {
@@ -116,12 +119,13 @@ namespace Remote4Support.Gui
                 }
                 else
                 {
+                    Log.WarnFormat("Sessions file does not exist, nothing loaded.  file={0}", fileName);
                 }
 
             }
             catch (Exception ex)
             {
-
+                Log.Error("Error while loading sessions from " + fileName, ex);
             }
         }
     }
