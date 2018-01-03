@@ -38,5 +38,14 @@ namespace Remote4Support.Gui
             statusStrip1.Visible = mi.Checked;
         }
 
-     }
+        private void sessionToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            sessions.ShowWindow(DockState.DockRight);
+        }
+
+        private void sessionDetailsToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            sessionDetail.ShowWindow(DockState.DockRightAutoHide);
+        }
+    }
 }

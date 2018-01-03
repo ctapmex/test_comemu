@@ -8,12 +8,27 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Remote4Support.Gui
 {
+    public delegate void SelectionChangedHandler(SessionBase Session);
+
     public partial class SessionTreeView : ToolWindow, IComparer
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public event SelectionChangedHandler SelectionChanged;
+
         TreeNode nodeRoot;
         public const string SessionIdDelim = "/";
 
+        public SessionBase SelectedSession
+        {
+            get
+            {
+                if (treeView1.SelectedNode != null && treeView1.SelectedNode.Tag is SessionBase)
+                {
+                    return treeView1.SelectedNode.Tag as SessionBase;
+                }
+                return null;
+            }
+        }
 
         public SessionTreeView(DockPanel dockPanel)
         {
@@ -140,6 +155,11 @@ namespace Remote4Support.Gui
                 SessionBase sessionData = (SessionBase)node.Tag;
                 Remote4Support.OpenSession(sessionData);
             }
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            this.SelectionChanged?.Invoke(this.SelectedSession);
         }
     }
 }

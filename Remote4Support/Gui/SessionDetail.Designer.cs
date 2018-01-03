@@ -28,32 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.sessionDetailPropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.SuspendLayout();
             // 
-            // propertyGrid1
+            // sessionDetailPropertyGrid
             // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(284, 261);
-            this.propertyGrid1.TabIndex = 0;
+            this.sessionDetailPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sessionDetailPropertyGrid.LineColor = System.Drawing.SystemColors.ControlDark;
+            this.sessionDetailPropertyGrid.Location = new System.Drawing.Point(0, 0);
+            this.sessionDetailPropertyGrid.Margin = new System.Windows.Forms.Padding(4);
+            this.sessionDetailPropertyGrid.Name = "sessionDetailPropertyGrid";
+            this.sessionDetailPropertyGrid.Size = new System.Drawing.Size(379, 321);
+            this.sessionDetailPropertyGrid.TabIndex = 0;
             // 
             // SessionDetail
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.propertyGrid1);
+            this.ClientSize = new System.Drawing.Size(379, 321);
+            this.Controls.Add(this.sessionDetailPropertyGrid);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SessionDetail";
             this.Text = "Session Detail";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SessionDetail_FormClosed);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
+        private System.Windows.Forms.PropertyGrid sessionDetailPropertyGrid;
     }
 }
