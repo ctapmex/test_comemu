@@ -16,7 +16,7 @@ namespace Remote4Support.Gui
 
             AutoSize = true;
             Text = session.SessionName;
-            Resize += new System.EventHandler(TermPanel_Resize);
+            //Resize += new System.EventHandler(TermPanel_Resize);
 
             Controls.Add(conemu = new ConEmuControl() { AutoStartInfo = null, Dock = DockStyle.Fill });
             con_session = conemu.Start(new ConEmuStartInfo()

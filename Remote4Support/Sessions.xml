@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSessionBase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SessionBase xsi:type="ConsoleSession" SessionId="east/app2" SessionName="app2" SessionGroup="east" CommandLine="cmd.exe" />
+  <SessionBase xsi:type="ConsoleSession" SessionId="west/app1" SessionName="app1" SessionGroup="west" CommandLine="d:/devenv/apps/putty/putty.exe" />
+  <SessionBase xsi:type="ConsoleSession" SessionId="west/app3" SessionName="app3" SessionGroup="west" CommandLine="d:/devenv/apps/msys64/usr/bin/mintty.exe" />
+</ArrayOfSessionBase>
